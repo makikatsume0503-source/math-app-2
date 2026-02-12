@@ -19,6 +19,7 @@ export const SimpleMathGame: React.FC<SimpleMathGameProps> = ({ mode, level, onB
     const [userAnswer, setUserAnswer] = useState('');
     const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
     const [showHint, setShowHint] = useState(true);
+    const [crossedOutItems, setCrossedOutItems] = useState<Set<number>>(new Set());
 
     function generateProblem(currentMode: GameMode, currentLevel: 1 | 2 | 3) {
         if (currentMode === 'addition') {
@@ -58,7 +59,7 @@ export const SimpleMathGame: React.FC<SimpleMathGameProps> = ({ mode, level, onB
                 const a = Math.floor(Math.random() * 10) + 1; // 1-10
                 const b = Math.floor(Math.random() * (a + 1)); // 0 to a
                 return { a, b, ans: a - b, operator: '-', level: 1 };
-            } else {
+            } else if (currentLevel === 2) {
                 // Level 2: Borrowing (e.g. 13-5)
                 // Minuend 11-18, Subtrahend such that it crosses 10
                 // a = 10 + x (x=0..8, actually 1..8 for valid borrowing usually)
@@ -81,6 +82,13 @@ export const SimpleMathGame: React.FC<SimpleMathGameProps> = ({ mode, level, onB
 
                 b = Math.floor(Math.random() * (maxB - minB + 1)) + minB;
                 return { a, b, ans: a - b, operator: '-', level: 2 };
+            } else {
+                // Level 3: Challenge (2-digit, >= 20)
+                // a = 20-50
+                // b = random(1 to a)
+                const a = Math.floor(Math.random() * 31) + 20; // 20-50
+                const b = Math.floor(Math.random() * a) + 1;   // 1 to a
+                return { a, b, ans: a - b, operator: '-', level: 3 };
             }
         }
     }
@@ -100,6 +108,7 @@ export const SimpleMathGame: React.FC<SimpleMathGameProps> = ({ mode, level, onB
         setProblem(generateProblem(mode, level));
         setUserAnswer('');
         setFeedback(null);
+        setCrossedOutItems(new Set());
     };
 
     return (
@@ -175,14 +184,71 @@ export const SimpleMathGame: React.FC<SimpleMathGameProps> = ({ mode, level, onB
                             {problem.a > 10 ? (
                                 <div className="flex flex-wrap gap-1 max-w-[150px] justify-center bg-white p-2 rounded-xl border border-slate-100">
                                     {Array.from({ length: problem.a }).map((_, i) => (
-                                        <div key={i} className="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center bg-red-50 rounded-full border border-red-100">
-                                            <AppleIcon size={20} className="text-red-500" fill="currentColor" />
+                                        <div
+                                            key={i}
+                                            onClick={() => {
+                                                if (mode === 'subtraction') {
+                                                    setCrossedOutItems(prev => {
+                                                        const newSet = new Set(prev);
+                                                        if (newSet.has(i)) newSet.delete(i);
+                                                        else newSet.add(i);
+                                                        return newSet;
+                                                    });
+                                                }
+                                            }}
+                                            className={`w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-full border transition-all cursor-pointer ${crossedOutItems.has(i)
+                                                ? 'bg-slate-100 border-slate-200 opacity-50'
+                                                : 'bg-red-50 border-red-100 hover:scale-110'
+                                                }`}
+                                        >
+                                            <div className="relative">
+                                                <AppleIcon size={20} className={crossedOutItems.has(i) ? "text-slate-300" : "text-red-500"} fill="currentColor" />
+                                                {crossedOutItems.has(i) && (
+                                                    <div className="absolute inset-0 flex items-center justify-center">
+                                                        <div className="w-full h-1 bg-slate-400 rotate-45 absolute rounded-full" />
+                                                        <div className="w-full h-1 bg-slate-400 -rotate-45 absolute rounded-full" />
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
                             ) : (
                                 <div className="text-center bg-white p-3 rounded-3xl shadow-sm border border-slate-100">
-                                    <TenFrame value={problem.a} icon={AppleIcon} colorClass="text-red-500 drop-shadow-md" />
+                                    {/* TenFrame Logic Need Update for interactivity or simpler grid for subtraction hint */}
+                                    {mode === 'subtraction' ? (
+                                        <div className="grid grid-cols-5 gap-2 w-fit">
+                                            {Array.from({ length: problem.a }).map((_, i) => (
+                                                <div
+                                                    key={i}
+                                                    onClick={() => {
+                                                        setCrossedOutItems(prev => {
+                                                            const newSet = new Set(prev);
+                                                            if (newSet.has(i)) newSet.delete(i);
+                                                            else newSet.add(i);
+                                                            return newSet;
+                                                        });
+                                                    }}
+                                                    className={`w-10 h-10 md:w-14 md:h-14 flex items-center justify-center rounded-lg md:rounded-xl border-2 transition-all cursor-pointer shadow-sm ${crossedOutItems.has(i)
+                                                        ? 'bg-slate-50 border-slate-200'
+                                                        : 'bg-white border-slate-100 hover:scale-105'
+                                                        }`}
+                                                >
+                                                    <div className="relative">
+                                                        <AppleIcon size={32} className={crossedOutItems.has(i) ? "text-slate-300" : "text-red-500"} fill="currentColor" />
+                                                        {crossedOutItems.has(i) && (
+                                                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                                                <div className="w-full h-1.5 bg-slate-400 rotate-45 absolute rounded-full" />
+                                                                <div className="w-full h-1.5 bg-slate-400 -rotate-45 absolute rounded-full" />
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <TenFrame value={problem.a} icon={AppleIcon} colorClass="text-red-500 drop-shadow-md" />
+                                    )}
                                 </div>
                             )}
 
