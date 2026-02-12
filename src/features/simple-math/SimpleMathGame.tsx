@@ -121,7 +121,16 @@ export const SimpleMathGame: React.FC<SimpleMathGameProps> = ({ mode, level, onB
                 <div className="bg-white/80 px-4 py-1 rounded-full border-2 border-slate-100 shadow-sm flex items-center gap-2">
                     <span className={`w-3 h-3 rounded-full ${mode === 'addition' ? 'bg-app-pink' : 'bg-app-blue'}`} />
                     <span className="font-bold text-slate-500 text-sm">
-                        {mode === 'addition' ? 'たしざん' : 'ひきざん'} Lv.{level}
+                        {mode === 'addition' ? 'たしざん' : 'ひきざん'} {
+                            (() => {
+                                switch (level) {
+                                    case 1: return 'かんたん';
+                                    case 2: return 'ふつう';
+                                    case 3: return 'ちょうせん';
+                                    default: return `Lv.${level}`;
+                                }
+                            })()
+                        }
                     </span>
                 </div>
 
