@@ -48,8 +48,8 @@ export const Home: React.FC<HomeProps> = ({ onStartGame }) => {
 
                     <div className="flex flex-col gap-3 w-full">
                         <LevelButton level={1} color="bg-app-blue" onClick={() => onStartGame('subtraction', 1)} label="かんたん (くりさがりなし)" />
-                        <LevelButton level={2} color="bg-app-blue" onClick={() => onStartGame('subtraction', 2)} label="ふつう (くりさがり)" />
-                        <LevelButton level={3} color="bg-app-blue" onClick={() => onStartGame('subtraction', 3)} label="ちょうせん (20いじょう)" />
+                        <LevelButton level={2} color="bg-app-blue" onClick={() => onStartGame('subtraction', 2)} label="ふつう (くりさがりあり)" />
+                        <LevelButton level={3} color="bg-app-blue" onClick={() => onStartGame('subtraction', 3)} label="ちょうせん (すこしおおきなかず)" />
                     </div>
                 </motion.div>
             </div>
