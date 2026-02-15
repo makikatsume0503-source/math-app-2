@@ -134,14 +134,7 @@ export const SimpleMathGame: React.FC<SimpleMathGameProps> = ({ mode, level, onB
                     </div>
                     <span className="font-bold text-slate-600 text-sm">
                         {
-                            (() => {
-                                switch (level) {
-                                    case 1: return mode === 'subtraction' ? 'くりさがりなし' : 'かんたん';
-                                    case 2: return mode === 'subtraction' ? 'くりさがりあり' : 'ふつう';
-                                    case 3: return mode === 'subtraction' ? 'すこしおおきなかず' : 'ちょうせん';
-                                    default: return `Lv.${level}`;
-                                }
-                            })()
+                            (() => `Lv.${level}`)()
                         }
                     </span>
                 </div>
@@ -269,14 +262,18 @@ export const SimpleMathGame: React.FC<SimpleMathGameProps> = ({ mode, level, onB
                                             ))}
                                         </div>
                                     ) : (
-                                        <div className="text-center bg-white p-3 rounded-3xl shadow-sm border border-slate-100">
-                                            <div className="grid grid-cols-5 gap-2 w-fit">
-                                                {Array.from({ length: problem.b }).map((_, i) => (
-                                                    <motion.div key={i} initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-white rounded-lg md:rounded-xl border-2 border-slate-100 shadow-sm">
-                                                        <AppleIcon size={32} className="text-red-500" fill="currentColor" />
-                                                    </motion.div>
-                                                ))}
-                                            </div>
+                                        <div className="text-center bg-white p-3 rounded-3xl shadow-sm border border-slate-100 min-w-[5rem] min-h-[5rem] flex items-center justify-center">
+                                            {problem.b === 0 ? (
+                                                <div className="text-slate-300 font-bold text-lg">0</div>
+                                            ) : (
+                                                <div className="grid grid-cols-5 gap-2 w-fit">
+                                                    {Array.from({ length: problem.b }).map((_, i) => (
+                                                        <motion.div key={i} initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-white rounded-lg md:rounded-xl border-2 border-slate-100 shadow-sm">
+                                                            <AppleIcon size={32} className="text-red-500" fill="currentColor" />
+                                                        </motion.div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 </>

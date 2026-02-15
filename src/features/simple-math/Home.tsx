@@ -28,9 +28,9 @@ export const Home: React.FC<HomeProps> = ({ onStartGame }) => {
                     <h2 className="text-3xl font-black text-slate-700 mb-6">たしざん</h2>
 
                     <div className="flex flex-col gap-3 w-full">
-                        <LevelButton level={1} color="bg-app-pink" onClick={() => onStartGame('addition', 1)} label="かんたん (10まで)" />
-                        <LevelButton level={2} color="bg-app-pink" onClick={() => onStartGame('addition', 2)} label="ふつう (20まで)" />
-                        <LevelButton level={3} color="bg-app-pink" onClick={() => onStartGame('addition', 3)} label="ちょうせん (50まで)" />
+                        <LevelButton level={1} color="bg-app-pink" onClick={() => onStartGame('addition', 1)} label="Lv.1 (10まで)" />
+                        <LevelButton level={2} color="bg-app-pink" onClick={() => onStartGame('addition', 2)} label="Lv.2 (20まで)" />
+                        <LevelButton level={3} color="bg-app-pink" onClick={() => onStartGame('addition', 3)} label="Lv.3 (50まで)" />
                     </div>
                 </motion.div>
 
@@ -47,9 +47,9 @@ export const Home: React.FC<HomeProps> = ({ onStartGame }) => {
                     <h2 className="text-3xl font-black text-slate-700 mb-6">ひきざん</h2>
 
                     <div className="flex flex-col gap-3 w-full">
-                        <LevelButton level={1} color="bg-app-blue" onClick={() => onStartGame('subtraction', 1)} label="かんたん (くりさがりなし)" />
-                        <LevelButton level={2} color="bg-app-blue" onClick={() => onStartGame('subtraction', 2)} label="ふつう (くりさがりあり)" />
-                        <LevelButton level={3} color="bg-app-blue" onClick={() => onStartGame('subtraction', 3)} label="ちょうせん (すこしおおきなかず)" />
+                        <LevelButton level={1} color="bg-app-blue" onClick={() => onStartGame('subtraction', 1)} label="Lv.1 (くりさがりなし)" />
+                        <LevelButton level={2} color="bg-app-blue" onClick={() => onStartGame('subtraction', 2)} label="Lv.2 (くりさがりあり)" />
+                        <LevelButton level={3} color="bg-app-blue" onClick={() => onStartGame('subtraction', 3)} label="Lv.3 (すこしおおきなかず)" />
                     </div>
                 </motion.div>
             </div>
