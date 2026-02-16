@@ -63,6 +63,10 @@ export const Home: React.FC<HomeProps> = ({ onStartGame }) => {
             >
                 <StampCalendar progress={progress} todayCount={todayCount} dailyGoal={dailyGoal} />
             </motion.div>
+
+            <div className="text-slate-400 text-xs mt-8">
+                v2026.02.16-2
+            </div>
         </div>
     );
 };
