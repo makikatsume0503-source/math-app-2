@@ -65,7 +65,7 @@ export const Home: React.FC<HomeProps> = ({ onStartGame }) => {
             </motion.div>
 
             <div className="text-slate-400 text-xs mt-8">
-                v2026.02.16-3
+                v2026.02.17-1
             </div>
         </div>
     );

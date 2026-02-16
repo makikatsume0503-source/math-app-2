@@ -8,7 +8,10 @@
   <!-- Stem -->
   <path d="M50 25 Q45 15 48 10" stroke="#78350F" stroke-width="3" fill="none" />
   
+  <!-- Black Background for Text -->
+  <rect x="15" y="45" width="70" height="40" rx="10" fill="rgba(0,0,0,0.7)" />
+
   <!-- Text -->
-  <text x="50" y="58" font-family="'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif" font-weight="900" font-size="18" text-anchor="middle" fill="white">たしざん</text>
-  <text x="50" y="78" font-family="'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif" font-weight="900" font-size="18" text-anchor="middle" fill="white">ひきざん</text>
+  <text x="50" y="62" font-family="'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif" font-weight="900" font-size="16" text-anchor="middle" fill="white">たしざん</text>
+  <text x="50" y="80" font-family="'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif" font-weight="900" font-size="16" text-anchor="middle" fill="white">ひきざん</text>
 </svg>
